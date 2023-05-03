@@ -1,5 +1,6 @@
 package efub.clone.hanatour.domain.tour.domain;
 
+import efub.clone.hanatour.domain.image.domain.Image;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,6 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SecondaryTable(
-        name = "tour_image",
-        pkJoinColumns = @PrimaryKeyJoinColumn(name = "tour_image_id")
-)
 public class Tour extends BaseTimeEntity {
 
     @Id
@@ -27,13 +24,6 @@ public class Tour extends BaseTimeEntity {
 
     @Column(length = 64)
     private String contents;
-
-    // image를 value로 생각하고 구현
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "tour_image",
-            joinColumns = @JoinColumn(name = "tour_id"))
-    private List<TourImage> images;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)

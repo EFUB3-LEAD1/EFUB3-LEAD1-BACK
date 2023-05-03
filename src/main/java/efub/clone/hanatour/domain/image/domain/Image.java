@@ -1,5 +1,6 @@
 package efub.clone.hanatour.domain.image.domain;
 
+import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,10 @@ public class Image extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long imageId;
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id")
+    private Tour tour;
 
     @Column(name = "url", nullable = false)
     private String imageUrl;
