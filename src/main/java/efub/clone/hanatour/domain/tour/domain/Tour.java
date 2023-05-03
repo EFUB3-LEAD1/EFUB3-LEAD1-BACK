@@ -37,7 +37,7 @@ public class Tour extends BaseTimeEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private String category;
+    private Category category;
 
     @Column(nullable = false)
     private Boolean isLayOver;
