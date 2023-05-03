@@ -2,6 +2,7 @@ package efub.clone.hanatour.domain.tour.domain;
 
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -21,4 +22,9 @@ public class Plan extends BaseTimeEntity {
 
     @Column(nullable = false)
     private LocalDate endDate;
+
+    @OneToOne
+    @JoinColumn(name = "tour_id")
+    private Tour tour;
+
 }

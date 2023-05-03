@@ -3,6 +3,7 @@ package efub.clone.hanatour.domain.tour.domain;
 import efub.clone.hanatour.domain.image.domain.Image;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -34,4 +35,5 @@ public class Tour extends BaseTimeEntity {
 
     @Column(nullable = false)
     private Boolean isShopping;
+
 }

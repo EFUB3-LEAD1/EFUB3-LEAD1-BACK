@@ -6,10 +6,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Category {
-    BEST(0, "인기베스트상품"),
-    SOLDOUT(1, "조기완판"),
-    HOTDEAL(2, "금주핫딜");
+    BEST("TOUR_BEST", "인기베스트상품"),
+    SOLD_OUT("TOUR_SOLD_OUT", "조기완판"),
+    HOT_DEAL("TOUR_HOT_DEAL", "금주핫딜");
 
-    private final Integer id;
+    private final String name;
     private final String title;
 }
