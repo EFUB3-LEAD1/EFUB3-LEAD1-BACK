@@ -1,4 +1,4 @@
-package efub.clone.hanatour.domain.member.domain;
+package efub.clone.hanatour.domain.member.domain.entity;
 
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
@@ -24,10 +24,14 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 32)
     private String nickname;
 
+    @Enumerated
+    private Authority authority;
+
     @Builder
-    public Member(String account, String password, String nickname) {
+    public Member(String account, String password, String nickname, Authority authority) {
         this.account = account;
         this.password = password;
         this.nickname = nickname;
+        this.authority = authority;
     }
 }
