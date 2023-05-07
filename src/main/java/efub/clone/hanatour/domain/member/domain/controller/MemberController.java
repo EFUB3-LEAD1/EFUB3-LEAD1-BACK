@@ -22,7 +22,7 @@ public class MemberController {
     }
 
     @GetMapping("/{account}")
-    public ResponseEntity<MemberResponseDto> findMemberInfoByEmail(@PathVariable String account) {
+    public ResponseEntity<MemberResponseDto> findMemberInfoByAccount(@PathVariable String account) {
         return ResponseEntity.ok(memberService.findMemberInfoByAccount(account));
     }
 }
