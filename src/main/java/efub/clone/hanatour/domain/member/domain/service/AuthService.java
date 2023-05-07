@@ -1,6 +1,8 @@
 package efub.clone.hanatour.domain.member.domain.service;
 
-import efub.clone.hanatour.domain.member.domain.entity.Member;
+import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
+import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
+import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
 import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
@@ -21,17 +23,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-
-    @Transactional
-    public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
-        if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
-            throw new RuntimeException("이미 가입되어 있는 유저입니다");
-        }
-
-        Member member = memberRequestDto.toMember(passwordEncoder);
-        return MemberResponseDto.of(memberRepository.save(member));
-    }
-
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성

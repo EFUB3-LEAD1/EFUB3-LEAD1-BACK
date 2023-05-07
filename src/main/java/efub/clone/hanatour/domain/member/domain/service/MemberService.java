@@ -1,5 +1,6 @@
 package efub.clone.hanatour.domain.member.domain.service;
 
+import efub.clone.hanatour.domain.member.domain.dto.MemberResponseDto;
 import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class MemberService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
-    public MemberResponseDto findMemberInfoByEmail(String account) {
-        return memberRepository.findByAccount(account)
+    public MemberResponseDto findMemberInfoByAccount(String account) {
+        return memberRepository.findMemberInfoByAccount(account)
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
     }
