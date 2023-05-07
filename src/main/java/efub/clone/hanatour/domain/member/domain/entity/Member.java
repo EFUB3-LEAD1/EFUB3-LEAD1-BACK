@@ -3,10 +3,12 @@ package efub.clone.hanatour.domain.member.domain.entity;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {
