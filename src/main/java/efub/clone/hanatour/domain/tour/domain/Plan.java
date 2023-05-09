@@ -27,4 +27,10 @@ public class Plan extends BaseTimeEntity {
     @JoinColumn(name = "tour_id")
     private Tour tour;
 
+    @Builder
+    public Plan(LocalDate beginDate, LocalDate endDate, Tour tour) {
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+        this.tour = tour;
+    }
 }

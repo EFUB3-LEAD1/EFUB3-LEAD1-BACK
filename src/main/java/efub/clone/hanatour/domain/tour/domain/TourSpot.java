@@ -3,6 +3,7 @@ package efub.clone.hanatour.domain.tour.domain;
 import efub.clone.hanatour.domain.spot.domain.Spot;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -22,4 +23,10 @@ public class TourSpot extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "spot_id")
     private Spot spot;
+
+    @Builder
+    public TourSpot(Tour tour, Spot spot) {
+        this.tour = tour;
+        this.spot = spot;
+    }
 }

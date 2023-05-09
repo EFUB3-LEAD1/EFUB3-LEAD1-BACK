@@ -1,15 +1,15 @@
 package efub.clone.hanatour.domain.tour.domain;
 
-import efub.clone.hanatour.domain.image.domain.Image;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tour extends BaseTimeEntity {
 
@@ -36,4 +36,13 @@ public class Tour extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isShopping;
 
+    @Builder
+    public Tour(String title, String subTitle, String contents, Category category, Boolean isLayOver, Boolean isShopping) {
+        this.title = title;
+        this.subTitle = subTitle;
+        this.contents = contents;
+        this.category = category;
+        this.isLayOver = isLayOver;
+        this.isShopping = isShopping;
+    }
 }
