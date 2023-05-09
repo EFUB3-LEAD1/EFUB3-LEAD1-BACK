@@ -8,6 +8,8 @@ import efub.clone.hanatour.domain.tour.domain.Plan;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.domain.tour.domain.TourSpot;
 import efub.clone.hanatour.domain.tour.dto.TourInfoDetailsDto;
+import efub.clone.hanatour.domain.tour.dto.TourInfoDto;
+import efub.clone.hanatour.domain.tour.dto.TourListResponseDto;
 import efub.clone.hanatour.domain.tour.dto.TourRequestDto;
 import efub.clone.hanatour.domain.tour.repository.PlanRepository;
 import efub.clone.hanatour.domain.tour.repository.TourRepository;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,13 +62,11 @@ public class TourInfoService {
 
         // Spot 찾기
         Spot spot = findSpotByTour(tour);
-        // Plan 찾기
-        Plan plan = findPlanByTour(tour);
         // Image 찾기
         List<Image> imageList = imageService.findImageByTour(tour);
 
         // DTO 생성 및 리턴
-        return TourInfoDetailsDto.of(tour, spot, plan, imageList);
+        return TourInfoDetailsDto.of(tour, spot, tour.getTourPlan(), imageList);
     }
 
     // Tour에 대한 Spot 조회
@@ -78,8 +79,11 @@ public class TourInfoService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행지입니다. ID=" + spotId));
     }
 
-    // Tour에 대한 Plan 조회
-    private Plan findPlanByTour(Tour tour) {
-        return planRepository.findByTour(tour);
+    // Tour 목록 조회
+    public TourListResponseDto findTourList() {
+        List<Tour> tourList = tourRepository.findAll();
+        List<TourInfoDto> tourInfoDtoList = tourList.stream()
+                .map(tour -> TourInfoDto.of(tour, tour.getTourPlan())).collect(Collectors.toList());
+        return TourListResponseDto.of("파리", tourInfoDtoList);
     }
 }

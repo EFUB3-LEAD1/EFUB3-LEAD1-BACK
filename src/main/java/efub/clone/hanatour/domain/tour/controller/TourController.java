@@ -1,6 +1,7 @@
 package efub.clone.hanatour.domain.tour.controller;
 
 import efub.clone.hanatour.domain.tour.dto.TourInfoDetailsDto;
+import efub.clone.hanatour.domain.tour.dto.TourListResponseDto;
 import efub.clone.hanatour.domain.tour.dto.TourRequestDto;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,12 @@ public class TourController {
     @ResponseStatus(HttpStatus.OK)
     public TourInfoDetailsDto readTourById(@PathVariable Long tourId) {
         return tourInfoService.findTourById(tourId);
+    }
+
+    // Tour 목록 조회
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public TourListResponseDto readTourList() {
+        return tourInfoService.findTourList();
     }
 }

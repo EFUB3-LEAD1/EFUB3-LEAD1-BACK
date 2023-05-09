@@ -39,6 +39,9 @@ public class Tour extends BaseTimeEntity {
     @Column(nullable = false, length = 20)
     private String price;
 
+    @OneToOne(mappedBy = "tour")
+    private Plan tourPlan;
+
     @Builder
     public Tour(String title, String subTitle, String contents, Category category, Boolean isLayOver, Boolean isShopping) {
         this.title = title;
