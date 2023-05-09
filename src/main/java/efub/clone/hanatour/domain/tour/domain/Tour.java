@@ -36,6 +36,9 @@ public class Tour extends BaseTimeEntity {
     @Column(nullable = false)
     private Boolean isShopping;
 
+    @Column(nullable = false, length = 20)
+    private String price;
+
     @Builder
     public Tour(String title, String subTitle, String contents, Category category, Boolean isLayOver, Boolean isShopping) {
         this.title = title;
