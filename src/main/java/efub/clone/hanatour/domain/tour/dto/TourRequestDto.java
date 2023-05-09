@@ -1,7 +1,6 @@
 package efub.clone.hanatour.domain.tour.dto;
 
 import efub.clone.hanatour.domain.tour.domain.Category;
-import efub.clone.hanatour.domain.tour.domain.Plan;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,14 +30,6 @@ public class TourRequestDto {
                 .category(this.category)
                 .isLayOver(this.isLayOver)
                 .isShopping(this.isShopping)
-                .build();
-    }
-
-    public Plan toPlan(Tour tour) {
-        return Plan.builder()
-                .beginDate(this.beginDate)
-                .endDate(this.endDate)
-                .tour(tour)
                 .build();
     }
 }

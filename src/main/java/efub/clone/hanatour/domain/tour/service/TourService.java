@@ -27,7 +27,7 @@ public class TourService {
 
     // Tour 저장
     @Transactional
-    public Long saveTourInfo(TourRequestDto requestDto) {
+    public void saveTourInfo(TourRequestDto requestDto) {
         // Tour 저장
         Tour savedTour = tourRepository.save(requestDto.toTourEntity());
         // TourSpot 저장
@@ -43,6 +43,5 @@ public class TourService {
                         .beginDate(requestDto.getBeginDate())
                         .endDate(requestDto.getEndDate())
                         .tour(savedTour).build());
-        return savedTour.getTourId();
     }
 }
