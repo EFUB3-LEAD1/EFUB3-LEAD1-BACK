@@ -2,6 +2,7 @@ package efub.clone.hanatour.global.config;
 
 import efub.clone.hanatour.global.jwt.JwtAccessDeniedHandler;
 import efub.clone.hanatour.global.jwt.JwtAuthenticationEntryPoint;
+import efub.clone.hanatour.global.jwt.JwtSecurityConfig;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,8 +38,8 @@ public class SecurityConfig {
                 .antMatchers("/").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest().permitAll()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .and().apply(new JwtSecurityConfig(tokenProvider));
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().apply(new JwtSecurityConfig(tokenProvider));
 
         return httpSecurity.build();
     }
