@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity {
+public class Member{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 32)
     private String nickname;
 
-    @Enumerated
-    private Authority authority;
-
     @Builder
-    public Member(String account, String password, String nickname, Authority authority) {
+    public Member(String account, String password, String nickname) {
         this.account = account;
         this.password = password;
         this.nickname = nickname;
-        this.authority = authority;
     }
 }

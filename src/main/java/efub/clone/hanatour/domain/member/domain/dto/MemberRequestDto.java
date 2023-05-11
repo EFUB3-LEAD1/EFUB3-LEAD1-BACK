@@ -20,7 +20,6 @@ public class MemberRequestDto {
         return Member.builder()
                 .account(account)
                 .password(passwordEncoder.encode(password))
-                .authority(Authority.ROLE_USER)
                 .build();
     }
 
