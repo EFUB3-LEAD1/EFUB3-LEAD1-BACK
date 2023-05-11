@@ -4,16 +4,13 @@ import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
-import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
-import efub.clone.hanatour.global.Util.RedisUtil;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +23,6 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisTemplate redisTemplate;
-    private final RedisUtil redisUtil;
 
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
@@ -84,13 +80,13 @@ public class AuthService {
         return tokenDto;
     }
 
-    @Transactional
-    public void logout(String accessToken, String refreshToken) {
-        redisUtil.setBlackList(accessToken, "accessToken", 1800);
-        redisUtil.setBlackList(refreshToken, "refreshToken", 60400);
-    }
+//    @Transactional
+//    public void logout(String accessToken, String refreshToken) {
+//        redisUtil.setBlackList(accessToken, "accessToken", 1800);
+//        redisUtil.setBlackList(refreshToken, "refreshToken", 60400);
+//    }
 
-    /*@Transactional
+    @Transactional
     public void logout(TokenRequestDto tokenRequestDto){
 
         // 1. 로그아웃 하고 싶은 토큰이 유효한지 먼저 검증
@@ -111,6 +107,6 @@ public class AuthService {
         Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
         redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(),"logout",expiration,TimeUnit.MILLISECONDS);
 
-    }*/
+    }
 }
 

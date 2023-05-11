@@ -4,7 +4,6 @@ import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import efub.clone.hanatour.domain.member.domain.service.AuthService;
-import efub.clone.hanatour.global.Util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final RedisUtil redisUtil;
 
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto memberRequestDto) {
@@ -31,8 +29,8 @@ public class AuthController {
 
     @DeleteMapping("/logout")
     public HttpStatus logout(
-            @RequestBody @Valid TokenDto requestTokenDto) {
-        authService.logout(requestTokenDto.getAccessToken(), requestTokenDto.getRefreshToken());
+            @RequestBody @Valid TokenRequestDto tokenRequestDto) {
+        authService.logout(tokenRequestDto);
         return HttpStatus.OK;
     }
 }
