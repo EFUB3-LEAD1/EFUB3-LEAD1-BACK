@@ -8,6 +8,7 @@ import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -15,12 +16,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.TimeUnit;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate redisTemplate;
+
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
@@ -40,6 +45,8 @@ public class AuthService {
                 .build();
 
         refreshTokenRepository.save(refreshToken);
+
+        redisTemplate.opsForValue().set("RT: " + memberRequestDto.getAccount(), tokenDto.getRefreshToken(),tokenDto.getAccessTokenExpiresIn(), TimeUnit.MILLISECONDS);
 
         // 5. 토큰 발급
         return tokenDto;
@@ -73,6 +80,28 @@ public class AuthService {
 
         // 토큰 발급
         return tokenDto;
+    }
+
+    @Transactional
+    public void logout(TokenRequestDto tokenRequestDto){
+        // 1. 로그아웃 하고 싶은 토큰이 유효한지 먼저 검증
+        if (!tokenProvider.validateToken(tokenRequestDto.getAccessToken())){
+            throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
+        }
+
+        // 2. Access Token에서 권한 정보 가져오기
+        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+
+        // Redis에서 Refresh Token 이 있는지 여부를 확인, token 존재할 경우 삭제
+        if (redisTemplate.opsForValue().get("RT:"+authentication.getName())!=null){
+            // Refresh Token 삭제
+            redisTemplate.delete("RT:"+authentication.getName());
+        }
+
+        // 해당 Access Token 유효시간을 가지고 와서 BlackList에 저장
+        Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
+        redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(),"logout",expiration,TimeUnit.MILLISECONDS);
+
     }
 }
 
