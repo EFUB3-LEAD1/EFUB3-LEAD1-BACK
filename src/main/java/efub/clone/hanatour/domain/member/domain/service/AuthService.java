@@ -6,6 +6,7 @@ import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
 import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
+import efub.clone.hanatour.global.Util.RedisUtil;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,6 +26,7 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisTemplate redisTemplate;
+    private final RedisUtil redisUtil;
 
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
@@ -83,7 +85,14 @@ public class AuthService {
     }
 
     @Transactional
+    public void logout(String accessToken, String refreshToken) {
+        redisUtil.setBlackList(accessToken, "accessToken", 1800);
+        redisUtil.setBlackList(refreshToken, "refreshToken", 60400);
+    }
+
+    /*@Transactional
     public void logout(TokenRequestDto tokenRequestDto){
+
         // 1. 로그아웃 하고 싶은 토큰이 유효한지 먼저 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getAccessToken())){
             throw new IllegalArgumentException("로그아웃 : 유효하지 않은 토큰입니다.");
@@ -102,6 +111,6 @@ public class AuthService {
         Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
         redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(),"logout",expiration,TimeUnit.MILLISECONDS);
 
-    }
+    }*/
 }
 
