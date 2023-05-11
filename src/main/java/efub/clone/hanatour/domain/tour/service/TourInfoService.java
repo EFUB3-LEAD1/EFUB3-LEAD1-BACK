@@ -78,7 +78,7 @@ public class TourInfoService {
 
     // Tour 목록 조회 - 전체 패키지
     public List<TourInfoWithImageDto> findTourListWithImage() {
-        return tourRepository.findTourListWithImage();
+        return tourRepository.findTourListWithImage().stream().distinct().collect(Collectors.toList());
     }
 
     // Tour 목록 조회 - 검색

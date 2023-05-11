@@ -1,10 +1,11 @@
 package efub.clone.hanatour.domain.tour.dto;
 
 import efub.clone.hanatour.domain.tour.domain.Category;
-import efub.clone.hanatour.domain.tour.domain.Tour;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.Objects;
 
 @Getter
 @Builder
@@ -19,15 +20,16 @@ public class TourInfoWithImageDto {
     private Category category;
     private String imageUrl;
 
-    public static TourInfoWithImageDto of(Tour tour, String imageUrl) {
-        return TourInfoWithImageDto.builder()
-                .tourId(tour.getTourId())
-                .title(tour.getTitle())
-                .subTitle(tour.getSubTitle())
-                .contents(tour.getContents())
-                .price(tour.getPrice())
-                .category(tour.getCategory())
-                .imageUrl(imageUrl)
-                .build();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TourInfoWithImageDto that = (TourInfoWithImageDto) o;
+        return Objects.equals(getTourId(), that.getTourId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tourId);
     }
 }
