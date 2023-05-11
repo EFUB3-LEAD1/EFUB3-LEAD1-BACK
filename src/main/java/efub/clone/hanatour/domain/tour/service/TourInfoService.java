@@ -79,11 +79,16 @@ public class TourInfoService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행지입니다. ID=" + spotId));
     }
 
-    // Tour 목록 조회
-    public TourListResponseDto findTourList() {
-        List<Tour> tourList = tourRepository.findAll();
+    // Tour 목록 조회 - 검색
+    public TourListResponseDto findTourListByNation(String nation) {
+        // nation(국가명)으로 spot 찾기
+        Spot spot = spotRepository.findByNation(nation);
+        // 찾은 spot의 id로 tour_spot 목록 찾기 + tour_spot과 매핑되는 tour 찾기
+        List<Tour> tourList = tourSpotRepository.findAllBySpot(spot)
+                .stream().map(TourSpot::getTour).collect(Collectors.toList());
+        // 데이터 형식 수정
         List<TourInfoDto> tourInfoDtoList = tourList.stream()
                 .map(tour -> TourInfoDto.of(tour, tour.getTourPlan())).collect(Collectors.toList());
-        return TourListResponseDto.of("파리", tourInfoDtoList);
+        return TourListResponseDto.of(nation, tourInfoDtoList);
     }
 }

@@ -15,6 +15,7 @@ public class TourRequestDto {
     private String title;
     private String subTitle;
     private String contents;
+    private String price;
     private Boolean isLayOver;
     private Boolean isShopping;
     private Category category;
@@ -27,6 +28,7 @@ public class TourRequestDto {
                 .title(this.title)
                 .subTitle(this.subTitle)
                 .contents(this.contents)
+                .price(this.price)
                 .category(this.category)
                 .isLayOver(this.isLayOver)
                 .isShopping(this.isShopping)

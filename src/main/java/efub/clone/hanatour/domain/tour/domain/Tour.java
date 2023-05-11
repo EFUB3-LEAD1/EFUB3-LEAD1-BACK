@@ -43,10 +43,11 @@ public class Tour extends BaseTimeEntity {
     private Plan tourPlan;
 
     @Builder
-    public Tour(String title, String subTitle, String contents, Category category, Boolean isLayOver, Boolean isShopping) {
+    public Tour(String title, String subTitle, String contents, String price, Category category, Boolean isLayOver, Boolean isShopping) {
         this.title = title;
         this.subTitle = subTitle;
         this.contents = contents;
+        this.price = price;
         this.category = category;
         this.isLayOver = isLayOver;
         this.isShopping = isShopping;

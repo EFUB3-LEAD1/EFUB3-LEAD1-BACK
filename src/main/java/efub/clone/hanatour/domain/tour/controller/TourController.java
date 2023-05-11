@@ -29,10 +29,10 @@ public class TourController {
         return tourInfoService.findTourById(tourId);
     }
 
-    // Tour 목록 조회
+    // Tour 목록 조회 - 검색
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public TourListResponseDto readTourList() {
-        return tourInfoService.findTourList();
+    public TourListResponseDto readTourList(@RequestParam(name = "keyword", defaultValue = "프랑스") String keyword) {
+        return tourInfoService.findTourListByNation(keyword);
     }
 }
