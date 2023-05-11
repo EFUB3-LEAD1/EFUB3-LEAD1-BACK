@@ -7,10 +7,7 @@ import efub.clone.hanatour.domain.spot.repository.SpotRepository;
 import efub.clone.hanatour.domain.tour.domain.Plan;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.domain.tour.domain.TourSpot;
-import efub.clone.hanatour.domain.tour.dto.TourInfoDetailsDto;
-import efub.clone.hanatour.domain.tour.dto.TourInfoDto;
-import efub.clone.hanatour.domain.tour.dto.TourListResponseDto;
-import efub.clone.hanatour.domain.tour.dto.TourRequestDto;
+import efub.clone.hanatour.domain.tour.dto.*;
 import efub.clone.hanatour.domain.tour.repository.PlanRepository;
 import efub.clone.hanatour.domain.tour.repository.TourRepository;
 import efub.clone.hanatour.domain.tour.repository.TourSpotRepository;
@@ -79,6 +76,11 @@ public class TourInfoService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행지입니다. ID=" + spotId));
     }
 
+    // Tour 목록 조회 - 전체 패키지
+    public List<TourInfoWithImageDto> findTourListWithImage() {
+        return tourRepository.findTourListWithImage();
+    }
+
     // Tour 목록 조회 - 검색
     public TourListResponseDto findTourListByNation(String nation) {
         // nation(국가명)으로 spot 찾기
@@ -86,7 +88,7 @@ public class TourInfoService {
         // 찾은 spot의 id로 tour_spot 목록 찾기 + tour_spot과 매핑되는 tour 찾기
         List<Tour> tourList = tourSpotRepository.findAllBySpot(spot)
                 .stream().map(TourSpot::getTour).collect(Collectors.toList());
-        // 데이터 형식 수정
+        // 데이터 형식 변환
         List<TourInfoDto> tourInfoDtoList = tourList.stream()
                 .map(tour -> TourInfoDto.of(tour, tour.getTourPlan())).collect(Collectors.toList());
         return TourListResponseDto.of(nation, tourInfoDtoList);

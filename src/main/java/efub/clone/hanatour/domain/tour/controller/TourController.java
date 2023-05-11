@@ -1,12 +1,12 @@
 package efub.clone.hanatour.domain.tour.controller;
 
-import efub.clone.hanatour.domain.tour.dto.TourInfoDetailsDto;
-import efub.clone.hanatour.domain.tour.dto.TourListResponseDto;
-import efub.clone.hanatour.domain.tour.dto.TourRequestDto;
+import efub.clone.hanatour.domain.tour.dto.*;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,5 +34,13 @@ public class TourController {
     @ResponseStatus(HttpStatus.OK)
     public TourListResponseDto readTourList(@RequestParam(name = "keyword", defaultValue = "프랑스") String keyword) {
         return tourInfoService.findTourListByNation(keyword);
+    }
+
+    // Tour 목록 조회 - 전체 패키지
+    @GetMapping("/package")
+    @ResponseStatus(HttpStatus.OK)
+    public TotalPackageResponseDto readTourPackages() {
+        List<TourInfoWithImageDto> tourListWithImage = tourInfoService.findTourListWithImage();
+        return TotalPackageResponseDto.of(tourListWithImage);
     }
 }
