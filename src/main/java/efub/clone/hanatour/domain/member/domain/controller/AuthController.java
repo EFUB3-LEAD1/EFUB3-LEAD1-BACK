@@ -1,6 +1,7 @@
 package efub.clone.hanatour.domain.member.domain.controller;
 
 import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
+import efub.clone.hanatour.domain.member.domain.dto.MemberResponseDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import efub.clone.hanatour.domain.member.domain.service.AuthService;
@@ -25,6 +26,11 @@ public class AuthController {
     @PostMapping("/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
+    }
+
+    @PostMapping("/sign")
+    public ResponseEntity<MemberResponseDto> signUp(@RequestBody MemberRequestDto memberRequestDto){
+        return ResponseEntity.ok(new MemberResponseDto(authService.createMember(memberRequestDto).getAccount()));
     }
 
     @DeleteMapping("/logout")

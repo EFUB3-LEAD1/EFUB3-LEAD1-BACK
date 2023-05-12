@@ -3,7 +3,9 @@ package efub.clone.hanatour.domain.member.domain.service;
 import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
+import efub.clone.hanatour.domain.member.domain.entity.Member;
 import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
+import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,22 +28,27 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisTemplate redisTemplate;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
+        log.info(authenticationToken.getPrincipal().toString());
 
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        log.info(authentication.toString());
+
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        log.info((tokenDto.toString()));
 
         // 4. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
+
+        /*RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
                 .value(tokenDto.getRefreshToken())
                 .build();
@@ -48,7 +56,7 @@ public class AuthService {
         refreshTokenRepository.save(refreshToken);
 
         redisTemplate.opsForValue().set("RT: " + memberRequestDto.getAccount(), tokenDto.getRefreshToken(),tokenDto.getAccessTokenExpiresIn(), TimeUnit.MILLISECONDS);
-
+*/
         // 5. 토큰 발급
         return tokenDto;
     }
@@ -110,6 +118,16 @@ public class AuthService {
         Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
         redisTemplate.opsForValue().set(tokenRequestDto.getAccessToken(),"logout",expiration,TimeUnit.MILLISECONDS);
 
+    }
+
+    public Member createMember(MemberRequestDto memberRequestDto) {
+        return memberRepository.save(
+            Member.builder()
+                    .account(memberRequestDto.getAccount())
+                    .nickname("아무거나")
+                    .password(passwordEncoder.encode(memberRequestDto.getPassword()))
+                    .build()
+        );
     }
 }
 
