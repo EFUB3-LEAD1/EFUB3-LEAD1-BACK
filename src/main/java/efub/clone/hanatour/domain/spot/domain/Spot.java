@@ -1,17 +1,19 @@
 package efub.clone.hanatour.domain.spot.domain;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Spot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long spot_id;
+    private Long spotId;
 
     @Column(nullable = false, length = 64)
     private String continent;
