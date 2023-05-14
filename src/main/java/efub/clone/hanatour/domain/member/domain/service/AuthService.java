@@ -47,8 +47,8 @@ public class AuthService {
         log.info((tokenDto.toString()));
 
         // 4. RefreshToken 저장
-
-        /*RefreshToken refreshToken = RefreshToken.builder()
+        /*
+        RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
                 .value(tokenDto.getRefreshToken())
                 .build();
@@ -56,7 +56,8 @@ public class AuthService {
         refreshTokenRepository.save(refreshToken);
 
         redisTemplate.opsForValue().set("RT: " + memberRequestDto.getAccount(), tokenDto.getRefreshToken(),tokenDto.getAccessTokenExpiresIn(), TimeUnit.MILLISECONDS);
-*/
+        */
+        
         // 5. 토큰 발급
         return tokenDto;
     }

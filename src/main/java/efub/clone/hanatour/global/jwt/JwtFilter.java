@@ -2,6 +2,7 @@ package efub.clone.hanatour.global.jwt;
 
 import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
@@ -34,18 +36,26 @@ public class JwtFilter extends OncePerRequestFilter {
         // 1. Request Header 에서 토큰을 꺼냄
         String jwt = resolveToken(request);
 
+        log.info(jwt);
+
         // 2. validateToken 으로 토큰 유효성 검사
         // 정상 토큰이면 해당 토큰으로 Authentication 을 가져와서 SecurityContext 에 저장
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 
+            /*
             // Redis에 해당 assessToken의 logout 여부를 확인
             String isLogout = (String) redisTemplate.opsForValue().get(jwt);
 
             // 로그아웃이 되어있지 않은 경우 토큰 정상 작동
             if (ObjectUtils.isEmpty(isLogout)) {
-                Authentication authentication = tokenProvider.getAuthentication(jwt);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+
             }
+             */
+
+            Authentication authentication = tokenProvider.getAuthentication(jwt);
+            // log.info(authentication.getName());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            // log.info(SecurityContextHolder.getContext().getAuthentication().toString());
         }
 
         filterChain.doFilter(request, response);
