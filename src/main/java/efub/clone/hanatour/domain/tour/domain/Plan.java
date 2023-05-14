@@ -38,7 +38,7 @@ public class Plan extends BaseTimeEntity {
     }
 
     // 기간 계산 (n박 m일에서의 m)
-    public int calcNights() {
+    public int calcDuration() {
         return Period.between(beginDate, endDate).getDays();
     }
 }
