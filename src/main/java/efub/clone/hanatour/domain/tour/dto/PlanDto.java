@@ -12,19 +12,17 @@ import java.time.LocalDate;
 @Builder
 @Getter
 public class PlanDto {
-    
+
     private LocalDate beginDate;
     private LocalDate endDate;
-    private Integer days;
-    private Integer nights;
+    private String duration;
 
     public static PlanDto of(Plan plan) {
-        int calcedNights = plan.calcNights();
+        int duration = plan.calcDuration();
         return PlanDto.builder()
                 .beginDate(plan.getBeginDate())
                 .endDate(plan.getEndDate())
-                .days(calcedNights - 2)
-                .nights(calcedNights)
+                .duration(String.format("%d박 %d일", duration - 2, duration))
                 .build();
     }
 }

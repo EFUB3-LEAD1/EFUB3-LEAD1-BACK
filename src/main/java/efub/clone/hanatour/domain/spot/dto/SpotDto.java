@@ -1,4 +1,4 @@
-package efub.clone.hanatour.domain.tour.dto;
+package efub.clone.hanatour.domain.spot.dto;
 
 import efub.clone.hanatour.domain.spot.domain.Spot;
 import lombok.AccessLevel;
@@ -10,7 +10,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class SpotDto {
-    
+
     private Long spotId;
     private String continent;
     private String nation;
