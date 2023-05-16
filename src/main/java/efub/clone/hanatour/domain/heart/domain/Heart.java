@@ -34,4 +34,12 @@ public class Heart {
     public Tour getTour() {
         return this.tour;
     }
+
+    public Member getMemberAccountId() {
+        return memberAccountId;
+    }
+
+    public Long getHeartId() {
+        return heartId;
+    }
 }

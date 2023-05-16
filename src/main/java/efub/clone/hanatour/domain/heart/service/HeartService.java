@@ -75,7 +75,7 @@ public class HeartService {
 
 
 
-    public void deleteHeart(String token, Long tourId) {
+    /*public void deleteHeart(String token, Long tourId) {
         // 인증 정보로부터 회원 정보 받아오기
         String account = SecurityUtil.getCurrentMemberAccount();
         log.info(account);
@@ -87,16 +87,59 @@ public class HeartService {
 
 //        Heart heart = heartRepository.findFirstByMemberAccountIdAndTour(member, tour)
 //                .orElseThrow(() -> new IllegalArgumentException("이미 좋아요를 누른 여행입니다."));
-        Optional<Heart> heartOptional = heartRepository.findByMemberAccountIdAndTour(member, tour);
+//        Optional<Heart> heartOptional = heartRepository.findByMemberAccountIdAndTour(member, tour);
+        List<Heart> hearts = heartRepository.findByMemberAccountIdAndTour(member, tour);
 
-        if (heartOptional.isPresent()) {
+        *//*if (heartOptional.isPresent()) {
             // db에서 삭제
             Heart heart = heartOptional.get();
             heartRepository.delete(heart);
         } else {
             throw new IllegalArgumentException("좋아요가 존재하지 않습니다.");
+        }*//*
+        for (Heart heart : hearts) {
+            heartRepository.delete(heart);
         }
 
+    }*/
+
+    /*public void deleteHeart(String token, Long tourId) {
+        // 인증 정보로부터 회원 정보 받아오기
+        String account = SecurityUtil.getCurrentMemberAccount();
+        log.info(account);
+        Member member = memberRepository.findMemberInfoByAccount(account)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member"));
+
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("좋아요를 찾을 수 없습니다."));
+
+        Heart heart = heartRepository.findFirstByMemberAccountId(heartId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid heart Id"));
+
+        // 회원과 삭제하려는 Heart의 회원이 일치하는지 확인
+        if (!heart.getMemberAccountId().equals(member)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
+        }
+
+        // Heart 삭제
+        heartRepository.delete(heart);
+    }*/
+
+    public void deleteHeart(String token, Long heartId) {
+        // 토큰에서 회원 정보를 추출
+        String account = SecurityUtil.getCurrentMemberAccount();
+
+        // 해당 회원이 좋아요를 한 항목인지 확인
+        Optional<Heart> optionalHeart = heartRepository.findById(heartId);
+        Heart heart = optionalHeart.orElseThrow(() -> new IllegalArgumentException("해당하는 좋아요가 존재하지 않습니다."));
+//        Member member = heart.getMemberAccountId();
+
+//        if (!member.getAccount().equals(username)) {
+//            throw new IllegalArgumentException("해당 좋아요를 삭제할 권한이 없습니다.");
+//        }
+
+        // 좋아요 삭제
+        heartRepository.delete(heart);
     }
 
     public List<TourInfoDto> getHeartTours(String token) {
