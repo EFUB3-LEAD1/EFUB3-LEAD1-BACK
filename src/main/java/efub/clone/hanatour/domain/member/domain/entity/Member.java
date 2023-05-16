@@ -29,12 +29,6 @@ public class Member{
     @Column(nullable = false, length = 32)
     private String nickname;
 
-    @ManyToMany
-    @JoinTable(name = "member_heart_tours",
-            joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "tour_id"))
-    private Set<Tour> heartTours = new HashSet<>();
-
     @Builder
     public Member(String account, String password, String nickname) {
         this.account = account;

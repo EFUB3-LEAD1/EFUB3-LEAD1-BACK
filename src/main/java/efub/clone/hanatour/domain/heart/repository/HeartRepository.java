@@ -16,5 +16,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     boolean existsByMemberAccountIdAndTour(Member memberAccountId, Tour tour);
     Optional<Heart> findByMemberAccountIdAndTour(Member member, Tour tour);
     Optional<Heart> findFirstByMemberAccountIdAndTour(Member memberAccountId, Tour tour);
-    List<Heart> findByMemberAccountId(Long memberId);
+//    List<Heart> findByMemberAccountId(Long memberId);
+    List<Heart> findByMemberAccountId(Member member);
 }

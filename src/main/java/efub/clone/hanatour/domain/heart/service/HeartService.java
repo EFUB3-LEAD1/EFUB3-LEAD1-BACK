@@ -9,7 +9,9 @@ import efub.clone.hanatour.domain.member.domain.entity.Member;
 import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.service.MemberService;
 import efub.clone.hanatour.domain.member.domain.util.SecurityUtil;
+import efub.clone.hanatour.domain.tour.domain.Plan;
 import efub.clone.hanatour.domain.tour.domain.Tour;
+import efub.clone.hanatour.domain.tour.dto.PlanDto;
 import efub.clone.hanatour.domain.tour.dto.TourInfoDto;
 import efub.clone.hanatour.domain.tour.repository.TourRepository;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,7 +60,7 @@ public class HeartService {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Tour"));
 
         // 이미 좋아요 했는지 확인
-        if (heartRepository.existsByMemberAndTour(member, tour)) {
+        if (heartRepository.existsByMemberAccountIdAndTour(member, tour)) {
             throw new IllegalArgumentException("이미 좋아요를 누른 여행입니다.");
         }
 
@@ -82,22 +85,47 @@ public class HeartService {
         Tour tour = tourRepository.findById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id"));
 
-        Heart heart = heartRepository.findFirstByMemberAccountIdAndTour(member, tour)
-                .orElseThrow(() -> new IllegalArgumentException("이미 좋아요를 누른 여행입니다."));
+//        Heart heart = heartRepository.findFirstByMemberAccountIdAndTour(member, tour)
+//                .orElseThrow(() -> new IllegalArgumentException("이미 좋아요를 누른 여행입니다."));
+        Optional<Heart> heartOptional = heartRepository.findByMemberAccountIdAndTour(member, tour);
 
-        // db에서 삭제
-        heartRepository.delete(heart);
+        if (heartOptional.isPresent()) {
+            // db에서 삭제
+            Heart heart = heartOptional.get();
+            heartRepository.delete(heart);
+        } else {
+            throw new IllegalArgumentException("좋아요가 존재하지 않습니다.");
+        }
+
     }
 
-    public List<TourInfoDto> findHeartToursByMember(String account) {
+    public List<TourInfoDto> getHeartTours(String token) {
+        String account = SecurityUtil.getCurrentMemberAccount();
         Member member = memberRepository.findMemberInfoByAccount(account)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid member"));
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
 
-        Set<Tour> heartTours = member.getHeartTours();
+//        List<Heart> hearts = heartRepository.findByMemberAccountId(member.getMemberId());
+        List<Heart> hearts = heartRepository.findByMemberAccountId(member);
 
-        return heartTours.stream()
-                .map(tour -> TourInfoDto.of(tour, tour.getTourPlan()))
+        List<TourInfoDto> heartTours = hearts.stream()
+                .map(heart -> {
+                    Tour tour = heart.getTour();
+                    Plan tourPlan = tour.getTourPlan();
+                    boolean isHeart = true;
+                    return TourInfoDto.builder()
+                            .tourId(tour.getTourId())
+                            .title(tour.getTitle())
+                            .subTitle(tour.getSubTitle())
+                            .contents(tour.getContents())
+                            .price(tour.getPrice())
+                            .category(tour.getCategory())
+                            .tourPlan(PlanDto.of(tourPlan))
+                            .isHeart(isHeart)
+                            .build();
+                })
                 .collect(Collectors.toList());
+
+        return heartTours;
     }
 
 }

@@ -30,4 +30,8 @@ public class Heart {
         this.tour = tour;
         this.memberAccountId = member;
     }
+
+    public Tour getTour() {
+        return this.tour;
+    }
 }

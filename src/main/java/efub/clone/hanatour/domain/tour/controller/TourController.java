@@ -73,8 +73,9 @@ public class TourController {
     // Tour 좋아요 삭제
     @DeleteMapping("/{tourId}/heart/{heartId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public void deleteHeart(@RequestHeader("Authorization") String token, @PathVariable Long heartId) {
+    public String deleteHeart(@RequestHeader("Authorization") String token, @PathVariable Long heartId) {
         heartService.deleteHeart(token, heartId);
+        return "좋아요를 취소했습니다.";
     }
 
     // 사용자 별로 좋아요한 Tour 목록 조회
@@ -82,7 +83,7 @@ public class TourController {
     @ResponseStatus(HttpStatus.OK)
     public List<TourInfoDto> getHeartToursByMember() {
         String account = SecurityUtil.getCurrentMemberAccount();
-        return heartService.findHeartToursByMember(account);
+        return heartService.getHeartTours(account);
     }
 
 }
