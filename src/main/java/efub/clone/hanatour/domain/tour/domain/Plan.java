@@ -14,7 +14,7 @@ import java.time.Period;
 @Table(name = "tour_plan")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Plan extends BaseTimeEntity {
+public class Plan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

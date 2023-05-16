@@ -1,5 +1,6 @@
 package efub.clone.hanatour.domain.tour.domain;
 
+import efub.clone.hanatour.domain.heart.domain.Heart;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Tour extends BaseTimeEntity {
+public class Tour {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +46,8 @@ public class Tour extends BaseTimeEntity {
     private Plan tourPlan;
 
     // 좋아요 목록 가져오기
-    /*@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Heart> tourHeartList = new ArrayList<>();*/
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Heart> hearts = new ArrayList<>();
 
     @Builder
     public Tour(String title, String subTitle, String contents, String price, Category category, Boolean isLayOver, Boolean isShopping) {
