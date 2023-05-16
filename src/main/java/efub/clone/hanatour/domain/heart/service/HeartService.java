@@ -10,6 +10,7 @@ import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.service.MemberService;
 import efub.clone.hanatour.domain.member.domain.util.SecurityUtil;
 import efub.clone.hanatour.domain.tour.domain.Tour;
+import efub.clone.hanatour.domain.tour.dto.TourInfoDto;
 import efub.clone.hanatour.domain.tour.repository.TourRepository;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
 import efub.clone.hanatour.global.jwt.TokenProvider;
@@ -18,6 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -67,7 +72,6 @@ public class HeartService {
 
 
 
-
     public void deleteHeart(String token, Long tourId) {
         // 인증 정보로부터 회원 정보 받아오기
         String account = SecurityUtil.getCurrentMemberAccount();
@@ -78,9 +82,22 @@ public class HeartService {
         Tour tour = tourRepository.findById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id"));
 
-        Heart heart = heartRepository.findByMemberAndTour(member, tour)
-                .orElseThrow(() -> new IllegalArgumentException("This member has not liked this tour"));
+        Heart heart = heartRepository.findFirstByMemberAccountIdAndTour(member, tour)
+                .orElseThrow(() -> new IllegalArgumentException("이미 좋아요를 누른 여행입니다."));
 
+        // db에서 삭제
         heartRepository.delete(heart);
     }
+
+    public List<TourInfoDto> findHeartToursByMember(String account) {
+        Member member = memberRepository.findMemberInfoByAccount(account)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member"));
+
+        Set<Tour> heartTours = member.getHeartTours();
+
+        return heartTours.stream()
+                .map(tour -> TourInfoDto.of(tour, tour.getTourPlan()))
+                .collect(Collectors.toList());
+    }
+
 }

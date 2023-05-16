@@ -19,7 +19,7 @@ public class Heart {
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member memberAccountId;
 
     @ManyToOne
     @JoinColumn(name = "tour_id")
@@ -28,6 +28,6 @@ public class Heart {
     @Builder
     public Heart(Tour tour, Member member) {
         this.tour = tour;
-        this.member = member;
+        this.memberAccountId = member;
     }
 }

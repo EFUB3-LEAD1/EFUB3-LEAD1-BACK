@@ -6,6 +6,7 @@ import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
 import efub.clone.hanatour.domain.member.domain.dto.MemberResponseDto;
 import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
 import efub.clone.hanatour.domain.member.domain.entity.Member;
+import efub.clone.hanatour.domain.member.domain.util.SecurityUtil;
 import efub.clone.hanatour.domain.tour.dto.*;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
 import efub.clone.hanatour.global.jwt.JwtAuthenticationEntryPoint;
@@ -62,9 +63,10 @@ public class TourController {
     // Tour 좋아요
     @PostMapping("/{tourId}/heart")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createHeart(@RequestHeader("Authorization") String token, @PathVariable Long tourId) {
+    public String createHeart(@RequestHeader("Authorization") String token, @PathVariable Long tourId) {
         log.info(token);
         heartService.createHeart(token, tourId);
+        return "좋아요 처리 되었습니다.";
     }
 
 
@@ -75,5 +77,12 @@ public class TourController {
         heartService.deleteHeart(token, heartId);
     }
 
+    // 사용자 별로 좋아요한 Tour 목록 조회
+    @GetMapping("/hearts")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TourInfoDto> getHeartToursByMember() {
+        String account = SecurityUtil.getCurrentMemberAccount();
+        return heartService.findHeartToursByMember(account);
+    }
 
 }
