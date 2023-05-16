@@ -42,6 +42,10 @@ public class Tour extends BaseTimeEntity {
     @OneToOne(mappedBy = "tour")
     private Plan tourPlan;
 
+    // 좋아요 목록 가져오기
+    /*@OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Heart> tourHeartList = new ArrayList<>();*/
+
     @Builder
     public Tour(String title, String subTitle, String contents, String price, Category category, Boolean isLayOver, Boolean isShopping) {
         this.title = title;
