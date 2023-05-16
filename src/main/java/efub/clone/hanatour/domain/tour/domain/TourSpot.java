@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TourSpot extends BaseTimeEntity {
+public class TourSpot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
