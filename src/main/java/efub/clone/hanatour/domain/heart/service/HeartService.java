@@ -67,9 +67,13 @@ public class HeartService {
 
 
 
-    public void deleteHeart(Long memberId, Long tourId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid member Id"));
+
+    public void deleteHeart(String token, Long tourId) {
+        // 인증 정보로부터 회원 정보 받아오기
+        String account = SecurityUtil.getCurrentMemberAccount();
+        log.info(account);
+        Member member = memberRepository.findMemberInfoByAccount(account)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member"));
 
         Tour tour = tourRepository.findById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id"));

@@ -69,11 +69,10 @@ public class TourController {
 
 
     // Tour 좋아요 삭제
-    @DeleteMapping("/{tourId}/heart")
+    @DeleteMapping("/{tourId}/heart/{heartId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public String deleteTourHeart(@PathVariable final Long tourId, @RequestParam final Long accountId) {
-        heartService.deleteHeart(tourId, accountId);
-        return "좋아요가 취소되었습니다.";
+    public void deleteHeart(@RequestHeader("Authorization") String token, @PathVariable Long heartId) {
+        heartService.deleteHeart(token, heartId);
     }
 
 
