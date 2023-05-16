@@ -22,6 +22,8 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    private final RedisConfig redisConfig;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -39,7 +41,7 @@ public class SecurityConfig {
                 .antMatchers("/**").permitAll()
                 .anyRequest().permitAll()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().apply(new JwtSecurityConfig(tokenProvider));
+                .and().apply(new JwtSecurityConfig(tokenProvider, redisConfig));
 
         return httpSecurity.build();
     }

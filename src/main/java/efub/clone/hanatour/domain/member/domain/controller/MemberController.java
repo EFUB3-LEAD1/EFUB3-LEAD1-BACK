@@ -12,17 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/me")
-    public ResponseEntity<MemberResponseDto> findMemberInfoById() {
-        return ResponseEntity.ok(memberService.findMemberInfoById(SecurityUtil.getCurrentMemberId()));
+    public ResponseEntity<MemberResponseDto> findMemberInfoByEmail() {
+        return ResponseEntity.ok(memberService.findMemberInfoByAccount(SecurityUtil.getCurrentMemberAccount()));
     }
 
-    @GetMapping("/{account}")
-    public ResponseEntity<MemberResponseDto> findMemberInfoByAccount(@PathVariable String account) {
-        return ResponseEntity.ok(memberService.findMemberInfoByAccount(account));
-    }
 }

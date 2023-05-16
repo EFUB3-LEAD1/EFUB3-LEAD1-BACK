@@ -58,22 +58,12 @@ public class TourInfoService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행 상품입니다. ID=" + tourId));
 
         // Spot 찾기
-        Spot spot = findSpotByTour(tour);
+        List<Spot> spot = spotRepository.findAllByTour(tour.getTourId());
         // Image 찾기
         List<Image> imageList = imageService.findImageByTour(tour);
 
         // DTO 생성 및 리턴
         return TourInfoDetailsDto.of(tour, spot, tour.getTourPlan(), imageList);
-    }
-
-    // Tour에 대한 Spot 조회
-    private Spot findSpotByTour(Tour tour) {
-        // TourSpot 찾기
-        TourSpot foundTourSpot = tourSpotRepository.findByTour(tour);
-        // TourSpot의 spotId로 Spot 찾기
-        Long spotId = foundTourSpot.getSpot().getSpotId();
-        return spotRepository.findById(spotId)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행지입니다. ID=" + spotId));
     }
 
     // Tour 목록 조회 - 전체 패키지
