@@ -1,13 +1,23 @@
 package efub.clone.hanatour.domain.tour.controller;
 
-//import efub.clone.hanatour.domain.heart.dto.HeartRequestDto;
-//import efub.clone.hanatour.domain.heart.service.HeartService;
+import efub.clone.hanatour.domain.heart.dto.HeartRequestDto;
+import efub.clone.hanatour.domain.heart.service.HeartService;
+import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
+import efub.clone.hanatour.domain.member.domain.dto.MemberResponseDto;
+import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
+import efub.clone.hanatour.domain.member.domain.entity.Member;
 import efub.clone.hanatour.domain.tour.dto.*;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
+import efub.clone.hanatour.global.jwt.JwtAuthenticationEntryPoint;
+import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.common.reflection.XMember;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -16,7 +26,7 @@ import java.util.List;
 public class TourController {
 
     private final TourInfoService tourInfoService;
-//    private final HeartService heartService;
+    private final HeartService heartService;
 
     // Tour 생성
     @PostMapping
@@ -48,18 +58,20 @@ public class TourController {
     }
 
     // Tour 좋아요
-    /*@PostMapping("/{tourId}/heart")
+    @PostMapping("/{tourId}/heart")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public String createTourHeart(@PathVariable final Long tourId, @RequestBody final HeartRequestDto requestDto) {
-        heartService.createHeart(tourId, requestDto);
-        return "좋아요를 눌렀습니다.";
-    }*/
+    public void createHeart(@RequestHeader("Authorization") String token, @PathVariable Long tourId, @RequestBody final HeartRequestDto requestDto) {
+        heartService.createHeart(token, requestDto);
+    }
+
 
     // Tour 좋아요 삭제
-    /*@DeleteMapping("/{tourId}/heart")
+    @DeleteMapping("/{tourId}/heart")
     @ResponseStatus(value = HttpStatus.OK)
     public String deleteTourHeart(@PathVariable final Long tourId, @RequestParam final Long accountId) {
         heartService.deleteHeart(tourId, accountId);
         return "좋아요가 취소되었습니다.";
-    }*/
+    }
+
+
 }

@@ -33,8 +33,25 @@ public class TokenProvider {
     private final Key key;
 
     public TokenProvider(@Value("${spring.jwt.secret-key}") String secretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        String keyWithoutSpaces = secretKey.replaceAll("\\s", "");
+        byte[] keyBytes = Decoders.BASE64.decode(keyWithoutSpaces);
+//        byte[] keyBytes = getBase64UrlWithPadding(secretKey).getBytes(keyWithoutSpaces);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private String getBase64UrlWithPadding(String base64Url) {
+        int paddingCount = 4 - base64Url.length() % 4;
+        if(paddingCount == 4) {
+            return base64Url;
+        }
+
+        StringBuilder sb = new StringBuilder(base64Url);
+
+        for (int i = 0; i < paddingCount; i++) {
+            sb.append("=");
+        }
+
+        return sb.toString();
     }
 
     public TokenDto generateTokenDto(Authentication authentication) {
