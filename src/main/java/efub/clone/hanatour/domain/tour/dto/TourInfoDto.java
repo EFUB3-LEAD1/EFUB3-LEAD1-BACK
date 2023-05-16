@@ -20,6 +20,7 @@ public class TourInfoDto {
     private String price;
     private Category category;
     private PlanDto tourPlan;
+    private boolean isHeart;
 
     public static TourInfoDto of(Tour tour, Plan plan) {
         return TourInfoDto.builder()
@@ -30,6 +31,7 @@ public class TourInfoDto {
                 .price(tour.getPrice())
                 .category(tour.getCategory())
                 .tourPlan(PlanDto.of(plan))
+                .isHeart(builder().isHeart)
                 .build();
     }
 }

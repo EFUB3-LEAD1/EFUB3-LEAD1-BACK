@@ -1,5 +1,6 @@
 package efub.clone.hanatour.domain.member.domain.entity;
 
+import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Entity
