@@ -21,7 +21,7 @@ public class Heart {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "tour_id")
     private Tour tour;
 

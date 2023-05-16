@@ -8,6 +8,7 @@ import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
 import efub.clone.hanatour.domain.member.domain.entity.Member;
 import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
 import efub.clone.hanatour.domain.member.domain.service.MemberService;
+import efub.clone.hanatour.domain.member.domain.util.SecurityUtil;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.domain.tour.repository.TourRepository;
 import efub.clone.hanatour.domain.tour.service.TourInfoService;
@@ -25,27 +26,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class HeartService {
     private final TourInfoService tourInfoService;
     private final TourRepository tourRepository;
-//    private final MemberService memberService;
-
     private final HeartRepository heartRepository;
     private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
 
-    public void createHeart(String token, HeartRequestDto heartRequestDto) {
+    public void createHeart(String token, Long tourId) {
         // 토큰 유효성 검사
+        /*
         if (!tokenProvider.validateToken(token)) {
             throw new IllegalArgumentException("Invalid token");
         }
         // 토큰으로부터 인증 정보 받아오기
         Authentication authentication = tokenProvider.getAuthentication(token);
 
+         */
+
         // 인증 정보로부터 회원 정보 받아오기
-        String account = authentication.getName();
+        String account = SecurityUtil.getCurrentMemberAccount();
+        log.info(account);
         Member member = memberRepository.findMemberInfoByAccount(account)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member"));
 
         // 요청 데이터로부터 여행 정보 받아오기
-        Tour tour = tourRepository.findByTourId(heartRequestDto.getTourId())
+        Tour tour = tourRepository.findByTourId(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Tour"));
 
         // 이미 좋아요 했는지 확인

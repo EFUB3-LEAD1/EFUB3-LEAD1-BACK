@@ -11,6 +11,7 @@ import efub.clone.hanatour.domain.tour.service.TourInfoService;
 import efub.clone.hanatour.global.jwt.JwtAuthenticationEntryPoint;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.common.reflection.XMember;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/tours")
 public class TourController {
@@ -60,8 +62,9 @@ public class TourController {
     // Tour 좋아요
     @PostMapping("/{tourId}/heart")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createHeart(@RequestHeader("Authorization") String token, @PathVariable Long tourId, @RequestBody final HeartRequestDto requestDto) {
-        heartService.createHeart(token, requestDto);
+    public void createHeart(@RequestHeader("Authorization") String token, @PathVariable Long tourId) {
+        log.info(token);
+        heartService.createHeart(token, tourId);
     }
 
 
