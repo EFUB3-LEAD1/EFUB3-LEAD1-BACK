@@ -1,7 +1,7 @@
-package efub.clone.hanatour.domain.member.domain.service;
+package efub.clone.hanatour.domain.member.service;
 
-import efub.clone.hanatour.domain.member.domain.dto.MemberResponseDto;
-import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
+import efub.clone.hanatour.domain.member.dto.MemberResponseDto;
+import efub.clone.hanatour.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

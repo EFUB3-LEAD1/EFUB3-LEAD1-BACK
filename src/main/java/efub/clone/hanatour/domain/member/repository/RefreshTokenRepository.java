@@ -1,6 +1,6 @@
-package efub.clone.hanatour.domain.member.domain.repository;
+package efub.clone.hanatour.domain.member.repository;
 
-import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
+import efub.clone.hanatour.domain.member.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

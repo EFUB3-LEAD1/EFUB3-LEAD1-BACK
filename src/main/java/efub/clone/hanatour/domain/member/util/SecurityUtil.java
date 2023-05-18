@@ -1,4 +1,4 @@
-package efub.clone.hanatour.domain.member.domain.util;
+package efub.clone.hanatour.domain.member.util;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

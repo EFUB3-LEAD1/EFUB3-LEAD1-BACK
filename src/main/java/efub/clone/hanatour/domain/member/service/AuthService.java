@@ -1,12 +1,12 @@
-package efub.clone.hanatour.domain.member.domain.service;
+package efub.clone.hanatour.domain.member.service;
 
-import efub.clone.hanatour.domain.member.domain.dto.MemberRequestDto;
-import efub.clone.hanatour.domain.member.domain.dto.TokenDto;
-import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
-import efub.clone.hanatour.domain.member.domain.entity.Member;
-import efub.clone.hanatour.domain.member.domain.entity.RefreshToken;
-import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
-import efub.clone.hanatour.domain.member.domain.repository.RefreshTokenRepository;
+import efub.clone.hanatour.domain.member.dto.MemberRequestDto;
+import efub.clone.hanatour.domain.member.dto.TokenDto;
+import efub.clone.hanatour.domain.member.dto.TokenRequestDto;
+import efub.clone.hanatour.domain.member.entity.Member;
+import efub.clone.hanatour.domain.member.entity.RefreshToken;
+import efub.clone.hanatour.domain.member.repository.MemberRepository;
+import efub.clone.hanatour.domain.member.repository.RefreshTokenRepository;
 import efub.clone.hanatour.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

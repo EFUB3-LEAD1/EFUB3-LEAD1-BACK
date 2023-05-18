@@ -1,4 +1,4 @@
-package efub.clone.hanatour.domain.member.domain.entity;
+package efub.clone.hanatour.domain.member.entity;
 
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;

@@ -1,10 +1,9 @@
 package efub.clone.hanatour.domain.heart.repository;
 
 import efub.clone.hanatour.domain.heart.domain.Heart;
-import efub.clone.hanatour.domain.member.domain.entity.Member;
+import efub.clone.hanatour.domain.member.entity.Member;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

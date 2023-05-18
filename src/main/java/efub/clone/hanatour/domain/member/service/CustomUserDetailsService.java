@@ -1,7 +1,7 @@
-package efub.clone.hanatour.domain.member.domain.service;
+package efub.clone.hanatour.domain.member.service;
 
-import efub.clone.hanatour.domain.member.domain.entity.Member;
-import efub.clone.hanatour.domain.member.domain.repository.MemberRepository;
+import efub.clone.hanatour.domain.member.entity.Member;
+import efub.clone.hanatour.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,8 +1,7 @@
 package efub.clone.hanatour.domain.heart.domain;
 
-import efub.clone.hanatour.domain.member.domain.entity.Member;
+import efub.clone.hanatour.domain.member.entity.Member;
 import efub.clone.hanatour.domain.tour.domain.Tour;
-import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

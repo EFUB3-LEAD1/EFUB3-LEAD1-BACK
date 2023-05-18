@@ -1,13 +1,12 @@
 package efub.clone.hanatour.global.jwt;
 
-import efub.clone.hanatour.domain.member.domain.dto.TokenRequestDto;
+import efub.clone.hanatour.domain.member.dto.TokenRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 

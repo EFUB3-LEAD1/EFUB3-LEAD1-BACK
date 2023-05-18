@@ -1,4 +1,4 @@
-package efub.clone.hanatour.domain.member.domain.entity;
+package efub.clone.hanatour.domain.member.entity;
 
 import lombok.Builder;
 import lombok.Getter;
