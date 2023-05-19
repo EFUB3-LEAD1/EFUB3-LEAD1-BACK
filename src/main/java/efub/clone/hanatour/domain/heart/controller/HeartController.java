@@ -40,7 +40,7 @@ public class HeartController {
     }
 
     // 사용자 별로 좋아요한 Tour 목록 조회
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "사용자의 좋아요 목록을 반환합니다.", description = "JWT 토큰이 필요합니다.")
     @ResponseStatus(HttpStatus.OK)
     public List<TourInfoDto> getHeartToursByMember() {
