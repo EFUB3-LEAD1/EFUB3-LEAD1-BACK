@@ -3,16 +3,15 @@ package efub.clone.hanatour.domain.image.domain;
 import efub.clone.hanatour.domain.tour.domain.Tour;
 import efub.clone.hanatour.global.entity.BaseTimeEntity;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-/**
- * Image를 엔티티로 구현하는 경우 (-> Member에서 OneToMany)
- */
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Image extends BaseTimeEntity {
+public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
