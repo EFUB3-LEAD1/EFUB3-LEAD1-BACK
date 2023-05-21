@@ -1,7 +1,11 @@
 package efub.clone.hanatour.domain.tour.service;
 
+import efub.clone.hanatour.domain.heart.repository.HeartRepository;
 import efub.clone.hanatour.domain.image.domain.Image;
 import efub.clone.hanatour.domain.image.service.ImageService;
+import efub.clone.hanatour.domain.member.entity.Member;
+import efub.clone.hanatour.domain.member.repository.MemberRepository;
+import efub.clone.hanatour.domain.member.util.SecurityUtil;
 import efub.clone.hanatour.domain.spot.domain.Spot;
 import efub.clone.hanatour.domain.spot.repository.SpotRepository;
 import efub.clone.hanatour.domain.tour.domain.Plan;
@@ -29,6 +33,8 @@ public class TourInfoService {
     private final SpotRepository spotRepository;
 
     private final ImageService imageService;
+    private final HeartRepository heartRepository;
+    private final MemberRepository memberRepository;
 
     // Tour 저장
     @Transactional
@@ -57,13 +63,23 @@ public class TourInfoService {
         Tour tour = tourRepository.findById(tourId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 여행 상품입니다. ID=" + tourId));
 
+        // 유저 찾기
+        Member member = memberRepository.findMemberInfoByAccount(SecurityUtil.getCurrentMemberAccount())
+                .orElse(null);
+
         // Spot 찾기
         List<Spot> spot = spotRepository.findAllByTour(tour.getTourId());
         // Image 찾기
         List<Image> imageList = imageService.findImageByTour(tour);
 
         // DTO 생성 및 리턴
-        return TourInfoDetailsDto.of(tour, spot, tour.getTourPlan(), imageList);
+        return TourInfoDetailsDto.of(
+                tour,
+                spot,
+                tour.getTourPlan(),
+                imageList,
+                heartRepository.existsByMemberAccountIdAndTour(member, tour)
+        );
     }
 
     // Tour 목록 조회 - 전체 패키지
