@@ -58,20 +58,17 @@ public class HeartService {
     }
 
 
-    public void deleteHeart(String token, Long heartId) {
+    public void deleteHeart(String token, Long tourId) {
         // 토큰에서 회원 정보를 추출
         String account = SecurityUtil.getCurrentMemberAccount();
 
-        // 해당 회원이 좋아요를 한 항목인지 확인
-        Heart heart = heartRepository.findById(heartId)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 좋아요가 존재하지 않습니다."));
-        Member member = heart.getMemberAccountId();
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 접근입니다."));
+        Member member = memberRepository.findMemberInfoByAccount(account)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 계정입니다."));
 
-        if (!member.getAccount().equals(account)) {
-           throw new IllegalArgumentException("해당 좋아요를 삭제할 권한이 없습니다.");
-        }
+        Heart heart = heartRepository.findByTourAndMemberAccountId(tour, member);
 
-        // 좋아요 삭제
         heartRepository.delete(heart);
     }
 

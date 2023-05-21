@@ -20,4 +20,7 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     List<Heart> findByMemberAccountId(Member member);
 
     Optional<Heart> findByHeartIdAndMemberAccountId(Long heartId, Member member);
+
+    Heart findByTourAndMemberAccountId(Tour tour, Member member);
+
 }

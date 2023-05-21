@@ -35,7 +35,7 @@ public class HeartController {
     @ResponseStatus(value = HttpStatus.OK)
     @Operation(summary = "Tour에 대한 좋아요를 삭제하는 API입니다.", description = "JWT 토큰과 tourId가 필요합니다.")
     public String deleteHeart(@RequestHeader("Authorization") String token, @RequestBody HeartRemoveRequestDto dto) {
-        heartService.deleteHeart(token, dto.getHeartId());
+        heartService.deleteHeart(token, dto.getTourId());
         return "좋아요를 취소했습니다.";
     }
 
