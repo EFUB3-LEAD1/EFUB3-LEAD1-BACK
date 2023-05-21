@@ -24,6 +24,7 @@ public class TourInfoDetailsDto {
     private String subTitle;
     private String contents;
     private String price;
+    private Boolean isHeart;
     private Boolean isLayOver;
     private Boolean isShopping;
     private Category category;
@@ -31,13 +32,14 @@ public class TourInfoDetailsDto {
     private PlanDto tourPlan;
     private List<ImageDto> images;
 
-    public static TourInfoDetailsDto of(Tour tour, List<Spot> spotList, Plan plan, List<Image> imageList) {
+    public static TourInfoDetailsDto of(Tour tour, List<Spot> spotList, Plan plan, List<Image> imageList, Boolean isHeart) {
         return TourInfoDetailsDto.builder()
                 .tourId(tour.getTourId())
                 .title(tour.getTitle())
                 .subTitle(tour.getSubTitle())
                 .contents(tour.getContents())
                 .price(tour.getPrice())
+                .isHeart(isHeart)
                 .isLayOver(tour.getIsLayOver())
                 .isShopping(tour.getIsShopping())
                 .category(tour.getCategory())
