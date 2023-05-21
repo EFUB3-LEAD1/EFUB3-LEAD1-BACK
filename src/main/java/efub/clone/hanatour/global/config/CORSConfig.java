@@ -20,6 +20,7 @@ public class CORSConfig {
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
         config.addExposedHeader("Authorization");
+        config.addExposedHeader("");
         config.addExposedHeader("Location");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
