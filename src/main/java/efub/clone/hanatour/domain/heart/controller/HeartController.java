@@ -35,12 +35,12 @@ public class HeartController {
     @ResponseStatus(value = HttpStatus.OK)
     @Operation(summary = "Tour에 대한 좋아요를 삭제하는 API입니다.", description = "JWT 토큰과 tourId가 필요합니다.")
     public String deleteHeart(@RequestHeader("Authorization") String token, @RequestBody HeartRemoveRequestDto dto) {
-        heartService.deleteHeart(token, dto.getHeartId());
+        heartService.deleteHeart(token, dto.getTourId());
         return "좋아요를 취소했습니다.";
     }
 
     // 사용자 별로 좋아요한 Tour 목록 조회
-    @GetMapping("/hearts")
+    @GetMapping()
     @Operation(summary = "사용자의 좋아요 목록을 반환합니다.", description = "JWT 토큰이 필요합니다.")
     @ResponseStatus(HttpStatus.OK)
     public List<TourInfoDto> getHeartToursByMember() {
