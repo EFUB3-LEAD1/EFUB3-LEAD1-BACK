@@ -40,7 +40,7 @@
         <td  align="center"><img src = "https://avatars.githubusercontent.com/u/77741296?v=4" width="100px"/></td>
     </tr>
     <tr width="100%">
-      <td  align="left"><li>AWS 계정 생성</li><li>CI/CD 파이프라인 구축</li><li>도메인 연결</li><li>https 배포</li><li>로그인/로그아웃 API</li><li>Swagger API Docs 세팅</li><li>데이터 구축</li></td>
+      <td  align="left"><li>DevOps 및 Cloud 환경 관리, Deploy</li><li>도메인 모델 설계</li><li>JWT 인증/인가 과정 API</li><li>Swagger API Docs 세팅</li><li>데이터 구축</li></td>
       <td  align="left"><li>프로젝트 생성</li><li>엔티티 생성</li><li>Tour API</li><li>Spot API</li><li>데이터 구축</li></td>
       <td  align="left"><li>mysql script 작성</li><li>ERD 세부 내용 작성</li><li>로그인/로그아웃 API</li><li>'좋아요' API</li></td>
    </tr>
