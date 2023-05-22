@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowedOrigins("https://www.htour.xyz/")
                 .allowedOrigins("https://tour.xyz/")
+                .allowedOrigins("https://efub-3-lead-1-front.vercel.app/")
                 .allowedMethods(HttpMethod.GET.name())
                 .allowedMethods(HttpMethod.POST.name())
                 .allowedMethods(HttpMethod.PUT.name())

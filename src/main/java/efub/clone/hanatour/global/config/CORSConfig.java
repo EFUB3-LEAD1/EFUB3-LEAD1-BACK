@@ -16,6 +16,7 @@ public class CORSConfig {
         config.addAllowedOrigin("http://localhost:3000/");
         config.addAllowedOrigin("https://www.htour.xyz/");
         config.addAllowedOrigin("https://htour.xyz/");
+        config.addAllowedOrigin("https://efub-3-lead-1-front.vercel.app/");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
