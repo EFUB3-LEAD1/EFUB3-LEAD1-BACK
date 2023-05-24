@@ -11,7 +11,7 @@
 
 
 ### ✨ 기능
-![GIFMakerme](https://github.com/EFUB3-LEAD1/EFUB3-LEAD1-BACK/assets/77741296/753e479c-6986-4046-b662-88351b892ed8)
+![GIFMaker_me (1)](https://github.com/EFUB3-LEAD1/EFUB3-LEAD1-BACK/assets/77741296/55b90fc8-c822-4732-8c64-27d285d44bf0)
 
 - 유저 인증 API
   -  로그인
