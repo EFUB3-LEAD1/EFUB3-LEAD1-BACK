@@ -11,6 +11,8 @@
 
 
 ### ✨ 기능
+![GIFMakerme](https://github.com/EFUB3-LEAD1/EFUB3-LEAD1-BACK/assets/77741296/753e479c-6986-4046-b662-88351b892ed8)
+
 - 유저 인증 API
   -  로그인
   -  로그아웃
@@ -25,7 +27,6 @@
   - Tour에 대한 좋아요 등록
   - Tour에 대한 좋아요 삭제
   
-🔗 <b>[배포 서버 바로가기](https://api.htour.xyz/)</b>
 
 ### 👩‍👩‍👧‍👦 백엔드 팀원 소개
 <table border="" cellspacing="0" cellpadding="0" width="100%">
